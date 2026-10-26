@@ -1,0 +1,11 @@
+[Unit]
+Description=HRMS API
+After=network.target
+[Service]
+User=hrms
+WorkingDirectory=/opt/hrms-api
+EnvironmentFile=/opt/hrms-api/.env
+ExecStart=/usr/bin/node server.js
+Restart=always
+[Install]
+WantedBy=multi-user.target

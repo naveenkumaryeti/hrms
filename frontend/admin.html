@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Admin Dashboard</title><link rel='stylesheet' href='style.css'></head><body>
+<div class='card wide'><h1>Admin Dashboard <button style='width:90px;float:right' onclick='logout()'>Logout</button></h1><div id='m' class='msg'></div>
+<h3 id='ft'>Add Employee</h3><input type='hidden' id='eid'>
+<div class='grid'><input id='fn' placeholder='Full name'><input id='em' placeholder='Email'><input id='dp' placeholder='Department'><input id='ds' placeholder='Designation'><input id='jd' type='date'><select id='st'><option>ACTIVE</option><option>ON_LEAVE</option><option>RESIGNED</option></select></div>
+<button onclick='save()'>Save Employee</button>
+<h3>All Employees</h3><input id='q' placeholder='Search name, email or department' oninput='load()'>
+<table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Dept</th><th>Designation</th><th>Joined</th><th>Status</th><th></th></tr></thead><tbody id='tb'></tbody></table></div>
+<script src='common.js'></script>
+<script>
+let rows=[];
+function cell(tr,t){const td=document.createElement('td');td.textContent=t;tr.appendChild(td)}
+async function load(){const d=await api('/api/employees?search='+encodeURIComponent(q.value));rows=d.data||[];tb.innerHTML='';rows.forEach((e,i)=>{const tr=document.createElement('tr');[e.employee_id,e.full_name,e.email,e.department,e.designation,e.joining_date,e.employment_status].forEach(v=>cell(tr,v));const td=document.createElement('td');const b=document.createElement('button');b.textContent='Edit';b.onclick=()=>edit(i);td.appendChild(b);tr.appendChild(td);tb.appendChild(tr)})}
+function edit(i){const e=rows[i];eid.value=e.employee_id;fn.value=e.full_name;em.value=e.email;dp.value=e.department;ds.value=e.designation;jd.value=e.joining_date;st.value=e.employment_status;ft.textContent='Edit Employee #'+e.employee_id;scrollTo(0,0)}
+async function save(){const b={full_name:fn.value,email:em.value,department:dp.value,designation:ds.value,joining_date:jd.value,employment_status:st.value};const d=await api(eid.value?'/api/employees/'+eid.value:'/api/employees',eid.value?'PUT':'POST',b);show('m',d.success,d.message||'Failed');if(d.success){eid.value='';ft.textContent='Add Employee';document.querySelectorAll('.grid input').forEach(x=>x.value='');load()}}
+guard('ADMIN').then(load);
+</script></body></html>

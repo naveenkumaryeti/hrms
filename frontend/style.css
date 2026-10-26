@@ -1,0 +1,12 @@
+body{font-family:Segoe UI,Arial,sans-serif;background:#f3f6fb;margin:0}
+.card{max-width:400px;margin:60px auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 4px 16px #0002}
+.wide{max-width:1000px}
+h1{color:#0b5ed7;font-size:22px}
+input,select,button{width:100%;padding:10px;margin:6px 0;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+button{background:#0b5ed7;color:#fff;border:0;cursor:pointer}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;font-size:14px}
+.msg{padding:8px;border-radius:6px;margin:8px 0;display:none}
+.ok{background:#d1e7dd;display:block}
+.err{background:#f8d7da;display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}

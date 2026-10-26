@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>HRMS Login</title><link rel='stylesheet' href='style.css'></head><body>
+<div class='card'><h1>HRMS Portal</h1><div id='m' class='msg'></div>
+<div id='loginBox'><input id='li' placeholder='Username or email'><input id='lp' type='password' placeholder='Password'><button onclick='login()'>Login</button>
+<p><a href='#' onclick='tog(1)'>New employee? Sign up</a> | <a href='admin-login.html'>Admin login</a></p></div>
+<div id='signBox' style='display:none'><input id='su' placeholder='Username (3-30 letters/numbers)'><input id='se' placeholder='Work email registered by HR'><input id='sp' type='password' placeholder='Password (10+ chars, Aa1)'><button onclick='signup()'>Create account</button>
+<p><a href='#' onclick='tog(0)'>Back to login</a></p></div></div>
+<script src='common.js'></script>
+<script>
+function tog(s){loginBox.style.display=s?'none':'block';signBox.style.display=s?'block':'none'}
+async function login(){const d=await api('/api/auth/login','POST',{identifier:li.value,password:lp.value});d.success?location.href=d.redirect:show('m',false,d.message||'Login failed')}
+async function signup(){const d=await api('/api/auth/signup','POST',{username:su.value,email:se.value,password:sp.value});show('m',d.success,d.message||'Failed');if(d.success)tog(0)}
+</script></body></html>

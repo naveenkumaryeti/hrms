@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>My Profile</title><link rel='stylesheet' href='style.css'></head><body>
+<div class='card'><h1>My Profile <button style='width:90px;float:right' onclick='logout()'>Logout</button></h1><div id='m' class='msg'></div><table id='t'></table></div>
+<script src='common.js'></script>
+<script>
+guard('EMPLOYEE').then(async()=>{const d=await api('/api/employees/me');if(!d.success)return show('m',false,d.message);const e=d.data;[['Employee ID',e.employee_id],['Name',e.full_name],['Email',e.email],['Department',e.department],['Designation',e.designation],['Joined',e.joining_date],['Status',e.employment_status]].forEach(x=>{const r=t.insertRow();r.insertCell().textContent=x[0];r.insertCell().textContent=x[1]})});
+</script></body></html>

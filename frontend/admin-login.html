@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Admin Login</title><link rel='stylesheet' href='style.css'></head><body>
+<div class='card'><h1>Administrator Login</h1><div id='m' class='msg'></div><input id='li' placeholder='Admin username or email'><input id='lp' type='password' placeholder='Password'><button onclick='go()'>Admin Login</button><p><a href='/'>Employee login</a></p></div>
+<script src='common.js'></script>
+<script>
+async function go(){const d=await api('/api/auth/login','POST',{identifier:li.value,password:lp.value});if(!d.success)return show('m',false,d.message||'Login failed');if(d.role!=='ADMIN'){await api('/api/auth/logout','POST');return show('m',false,'Not an administrator account')}location.href='/admin.html'}
+</script></body></html>
