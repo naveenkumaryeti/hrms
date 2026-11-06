@@ -74,7 +74,14 @@ az group exists -n rg-hrms-lab      # must print false
 export LOC=southindia
 export SZ=Standard_DC1s_v3
 bash scripts/deploy.sh
-
+az vm list-skus -l eastasia --resource-type virtualMachines \
+  --query "[?length(restrictions)==\`0\`].{n:name,c:capabilities[?name=='vCPUs']|[0].value}" -o tsv | awk '$2==1' | grep -v p
+Standard_F1ads_v7       1
+Standard_F1alds_v7      1
+Standard_F1als_v7       1
+Standard_F1amds_v7      1
+Standard_F1ams_v7       1
+Standard_F1as_v7        1
 ```
 4. Wait for `DONE`. The script prints your website address and admin password, and saves all passwords in `secrets.txt`.
 5. Optional settings before running: `export LOC=eastus` (another region), `export SZ=Standard_DC1s_v3` (force a VM size), `export RG=my-rg-name`, `export DNS=mycustomlabel` (must be globally unique, lowercase).
